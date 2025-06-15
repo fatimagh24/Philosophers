@@ -1,6 +1,6 @@
 CC = cc
 FLAGS = -Wall -Wextra -Werror
-SRC = main.c helpers.c
+SRC = main.c
 OBJ = ${SRC:.c=.o}
 NAME = philo
 LIBFT_DIR = libft
@@ -11,8 +11,8 @@ all:$(LIBFT_A) $(NAME)
 $(LIBFT_A) :
 		make -C $(LIBFT_DIR)
 
-$(NAME) : $(OBJ)
-		@$(CC) $(FLAGS) -o $@ $^ -L $(LIBFT_DIR) -o $@
+$(NAME): $(OBJ) $(LIBFT_A)
+	$(CC) $(FLAGS) $(OBJ) $(LIBFT_A) -o $(NAME)
 
 
 clean :
