@@ -1,6 +1,6 @@
 CC = cc
 FLAGS = -Wall -Wextra -Werror
-SRC = main.c
+SRC = main.c helpers.c initialize.c ft_free.c philo_routine.c simulation.c
 OBJ = ${SRC:.c=.o}
 NAME = philo
 LIBFT_DIR = libft

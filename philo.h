@@ -6,7 +6,7 @@
 /*   By: fghanem <fghanem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 14:47:59 by fghanem           #+#    #+#             */
-/*   Updated: 2025/06/15 17:42:26 by fghanem          ###   ########.fr       */
+/*   Updated: 2025/06/16 13:19:12 by fghanem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,21 @@ void	init_data(t_data *data, char **argv);
 void	init_philos(t_philo *philos, t_data *data);
 void	init_forks(t_fork *forks, int num_forks);
 int		get_current_time(void);
-void	philo_routine(void *arg);
+void	*philo_routine(void *arg);
 void	creat_threads(t_philo *philos, t_data *data);
-void check_args(char **argv);
+int check_args(char **argv);
+void join_threads(t_philo *philos, t_data *data);
+int	ft_usleep(t_philo *philo, size_t ms);
 
-
+int is_dead(t_philo *philo);
+int philo_thinking(t_philo *philo);
+int philo_eating(t_philo *philo);
+int philo_sleeping(t_philo *philo);
+long time_diff(long start, long end);
+void ft_free(t_data *data, t_philo *philos);
+void ft_free_all(t_data *data, t_philo *philos);
+int overflow_check(char **argv);
+// void *monitor_routine(void *arg);
+// void *monitor(void *arg);
+// void init_data(t_data *data, char **argv);
 #endif
