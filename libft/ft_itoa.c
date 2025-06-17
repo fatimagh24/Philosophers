@@ -9,9 +9,8 @@
 /*   Updated: 2024/09/09 17:37:02 by fghanem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <stdio.h>
-
 #include "libft.h"
+#include <stdio.h>
 
 static size_t	ft_nlen(long n);
 static char		*ft_fill(long nb, char *s, size_t l, size_t neg);
@@ -73,13 +72,13 @@ static size_t	ft_nlen(long n)
 	{
 		len++;
 		n /= 10;
-	}	
+	}
 	return (len);
 }
 /*
-int main()
+int	main(void)
 {
-	  int test_values[] = {0, 1, -1, 123, -123, 2147483647, -2147483648};
+		int test_values[] = {0, 1, -1, 123, -123, 2147483647, -2147483648};
     size_t num_tests = sizeof(test_values) / sizeof(test_values[0]);
     char *result;
 
@@ -92,5 +91,5 @@ int main()
             printf("itoa(%d) failed\n", test_values[i]);
         }
     }
-	return 0;
+	return (0);
 }*/

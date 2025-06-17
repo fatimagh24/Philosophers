@@ -6,73 +6,90 @@
 /*   By: fghanem <fghanem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 12:35:44 by fghanem           #+#    #+#             */
-/*   Updated: 2025/06/16 13:23:46 by fghanem          ###   ########.fr       */
+/*   Updated: 2025/06/17 17:31:08 by fghanem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void    creat_threads(t_philo *philos, t_data *data)
+void	creat_threads(t_philo *philos, t_data *data)
 {
-    int i;
-    pthread_t monitor;
+	int			i;
+	pthread_t	monitor;
 
-    i = 0;
-    while (i < data->num_philos)
-    {
-        if (pthread_create(&philos[i].thread, NULL, philo_routine, &philos[i]) != 0)
-        {
-            write(2, "Error: Failed to create thread\n", 32);
-            ft_free_all(data, philos);
-        }
-        i++;
-    }
-    join_threads(philos, data);
+	i = 0;
+	while (i < data->num_philos)
+	{
+		if (pthread_create(&philos[i].thread, NULL, philo_routine,
+				&philos[i]) != 0)
+		{
+			ft_putstr_fd("Error: Failed to create thread\n", 2);
+			return ;
+		}
+		i++;
+	}
+	join_threads(philos, data);
 }
 
-void *philo_routine(void *arg)
+void	*philo_routine(void *arg)
 {
-    t_philo *philo = (t_philo *)arg;
-    while (philo->data->sim_flag)
-    {
-        if (philo_thinking(philo) == 1)
-        {
-            ft_free_all(philo->data, philo->data->philo);
-            return (NULL);
-        }
-        if (philo->data->sim_flag == 0)
-            break;
-        if (philo_eating(philo) == 1)
-        {
-            ft_free_all(philo->data, philo->data->philo);
-            return (NULL);
-        }
-        if (philo->data->sim_flag == 0)
-            break;
-        if (philo_sleeping(philo) == 1)
-        {
-            ft_free_all(philo->data, philo->data->philo);
-            return (NULL);
-        }
-        if (philo->data->sim_flag == 0)
-            break;
-		if (philo->data->num_meals != -1 && philo->meals_eaten >= philo->data->num_meals)
-        {
-            pthread_mutex_lock(&philo->data->print_lock);
-            printf("%lld philo %d has finished eat %d meals \n", get_current_time() - philo->data->start_time, philo->id, philo->meals_eaten);
-            pthread_mutex_unlock(&philo->data->print_lock);
-            break ;
-        }
-    }
-    return (NULL);
+	t_philo	*philo;
+
+	philo = (t_philo *)arg;
+	if (philo->l_fork == philo->r_fork)
+	{
+		if (philo_thinking(philo) == 1)
+			return (NULL);
+		while (!is_dead(philo))
+			;
+		return (NULL);
+	}
+	while (get_sim_flag(philo->data, 1) == 1)
+	{
+		if (philo_thinking(philo) == 1)
+			return (NULL);
+		if (philo_eating(philo) == 1)
+			return (NULL);
+		if (philo_sleeping(philo) == 1)
+			return (NULL);
+		if (finished_meals(philo) == 1)
+			return (NULL);
+	}
+	return (NULL);
 }
 
-void join_threads(t_philo *philos, t_data *data)
+void	join_threads(t_philo *philos, t_data *data)
 {
-    int i = 0;
-    while (i < data->num_philos)
-    {
-        pthread_join(philos[i].thread, NULL);
-        i++;
-    }
+	int	i;
+
+	i = 0;
+	while (i < data->num_philos)
+	{
+		pthread_join(philos[i].thread, NULL);
+		i++;
+	}
+}
+
+int	get_sim_flag(t_data *data, int new_f)
+{
+	int	flag;
+
+	flag = data->sim_flag;
+	if (new_f == 0)
+		data->sim_flag = new_f;
+	return (flag);
+}
+
+int	finished_meals(t_philo *philo)
+{
+	if (philo->data->num_meals != -1
+		&& philo->meals_eaten >= philo->data->num_meals)
+	{
+		pthread_mutex_lock(&philo->data->print_lock);
+		printf("%lld philo %d has finished eat %d meals \n", get_current_time()
+			- philo->data->start_time, philo->id, philo->meals_eaten);
+		pthread_mutex_unlock(&philo->data->print_lock);
+		return (1);
+	}
+	return (0);
 }
