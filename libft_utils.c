@@ -1,27 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atol.c                                          :+:      :+:    :+:   */
+/*   libft_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fghanem <fghanem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/22 14:52:43 by fghanem           #+#    #+#             */
-/*   Updated: 2025/06/14 11:03:33 by fghanem          ###   ########.fr       */
+/*   Created: 2025/06/21 12:13:09 by fghanem           #+#    #+#             */
+/*   Updated: 2025/06/21 12:43:31 by fghanem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "philo.h"
 
-long	ft_atol(char *s)
+void	ft_putstr_fd(char *s, int fd)
 {
-	int		i;
-	long	res;
-	int		sign;
+	if (!s)
+		return ;
+	while (*s)
+	{
+		write(fd, s, 1);
+		s++;
+	}
+}
+
+int	ft_atoi(const char *s)
+{
+	int	i;
+	int	res;
+	int	sign;
 
 	i = 0;
 	res = 0;
 	sign = 1;
-	while (s[i] == ' ' || (s[i] >= '\t' && s[i] <= '\r'))
+	while ((s[i] >= 9 && s[i] <= 13) || s[i] == 32)
 		i++;
 	if (s[i] == '-' || s[i] == '+')
 	{
@@ -29,13 +40,19 @@ long	ft_atol(char *s)
 			sign = -1;
 		i++;
 	}
-	while (s[i] != '\0')
+	while (s[i] >= '0' && s[i] <= '9')
 	{
-		if ((s[i] >= '0' && s[i] <= '9'))
-			res = res * 10 + (s[i] - '0');
-		else if (!(s[i] >= '0' && s[i] <= '9') || res > INT_MAX)
-			printf("Error\n");
+		res = res * 10 + (s[i] - '0');
 		i++;
 	}
 	return (res * sign);
+}
+
+int	ft_isdigit(int c)
+{
+	if (c >= '0' && c <= '9')
+	{
+		return (1);
+	}
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: fghanem <fghanem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 12:36:27 by fghanem           #+#    #+#             */
-/*   Updated: 2025/06/17 17:19:56 by fghanem          ###   ########.fr       */
+/*   Updated: 2025/06/21 13:21:39 by fghanem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,4 @@ void	ft_free(t_data *data)
 		free(data->forks_array);
 	}
 	pthread_mutex_destroy(&data->print_lock);
-}
-
-void	ft_free_all(t_data *data)
-{
-	ft_free(data);
-	exit(EXIT_SUCCESS);
 }

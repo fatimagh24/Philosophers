@@ -6,7 +6,7 @@
 /*   By: fghanem <fghanem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 12:35:44 by fghanem           #+#    #+#             */
-/*   Updated: 2025/06/17 17:31:08 by fghanem          ###   ########.fr       */
+/*   Updated: 2025/06/21 13:07:24 by fghanem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,11 @@ void	*philo_routine(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	if (philo->l_fork == philo->r_fork)
+	if (philo->data->num_philos == 1)
 	{
 		if (philo_thinking(philo) == 1)
 			return (NULL);
-		while (!is_dead(philo))
+		while (!dead_check(philo))
 			;
 		return (NULL);
 	}
