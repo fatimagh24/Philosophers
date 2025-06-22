@@ -82,8 +82,10 @@ int	philo_eating(t_philo *philo)
 			- philo->data->start_time, philo->id);
 	}
 	pthread_mutex_unlock(&philo->data->print_lock);
+	pthread_mutex_lock(&philo->dead);
 	philo->state = EATING;
 	philo->last_meal_t = get_current_time();
+	pthread_mutex_unlock(&philo->dead);
 	ft_sleep(philo, philo->data->eat_t);
 	philo->meals_eaten++;
 	unlock_forks_philo(philo);

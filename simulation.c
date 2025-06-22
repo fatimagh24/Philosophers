@@ -74,9 +74,11 @@ int	get_sim_flag(t_data *data, int new_f)
 {
 	int	flag;
 
+	pthread_mutex_lock(&data->sim_lock);
 	flag = data->sim_flag;
 	if (new_f == 0)
 		data->sim_flag = new_f;
+	pthread_mutex_unlock(&data->sim_lock);
 	return (flag);
 }
 

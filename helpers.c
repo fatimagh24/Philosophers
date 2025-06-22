@@ -85,19 +85,20 @@ int	ft_sleep(t_philo *philo, size_t ms)
 
 int	dead_check(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->data->print_lock);
+	pthread_mutex_lock(&philo->dead);
 	if ((int)(get_current_time() - philo->last_meal_t) > philo->data->die_t)
 	{
-		if (get_sim_flag(philo->data, 1))
+		pthread_mutex_unlock(&philo->dead);
+		if (get_sim_flag(philo->data, 0) == 1)
 		{
+			pthread_mutex_lock(&philo->data->print_lock);
 			printf("%lld philo %d died\n",
 				get_current_time() - philo->data->start_time, philo->id);
-			philo->data->sim_flag = 0;
+			pthread_mutex_unlock(&philo->data->print_lock);
 		}
-		pthread_mutex_unlock(&philo->data->print_lock);
 		philo->state = DEAD;
 		return (1);
 	}
-	pthread_mutex_unlock(&philo->data->print_lock);
+	pthread_mutex_unlock(&philo->dead);
 	return (0);
 }

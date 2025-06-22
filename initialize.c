@@ -35,6 +35,7 @@ int	init_data(t_data *data, char **argv)
 		return (1);
 	data->sim_flag = 1;
 	pthread_mutex_init(&data->print_lock, NULL);
+	pthread_mutex_init(&data->sim_lock, NULL);
 	data->philo = NULL;
 	return (0);
 }
@@ -51,6 +52,7 @@ void	init_philos(t_philo *philos, t_data *data)
 		philos[i].last_meal_t = data->start_time;
 		philos[i].data = data;
 		philos[i].state = THINKING;
+		pthread_mutex_init(&philos[i].dead, NULL);
 		philos[i].l_fork = &data->forks_array[i];
 		philos[i].r_fork = &data->forks_array[(i + 1) % data->num_philos];
 		i++;

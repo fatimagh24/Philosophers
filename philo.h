@@ -62,6 +62,7 @@ typedef struct s_data
 	long long			start_time;
 	t_fork				*forks_array;
 	pthread_mutex_t		print_lock;
+	pthread_mutex_t		sim_lock;
 	t_philo				*philo;
 }						t_data;
 
