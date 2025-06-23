@@ -6,7 +6,7 @@
 /*   By: fghanem <fghanem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 12:35:44 by fghanem           #+#    #+#             */
-/*   Updated: 2025/06/21 13:07:24 by fghanem          ###   ########.fr       */
+/*   Updated: 2025/06/23 11:58:21 by fghanem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	creat_threads(t_philo *philos, t_data *data)
 {
 	int			i;
-	pthread_t	monitor;
 
 	i = 0;
 	while (i < data->num_philos)
@@ -46,9 +45,9 @@ void	*philo_routine(void *arg)
 	}
 	while (get_sim_flag(philo->data, 1) == 1)
 	{
-		if (philo_thinking(philo) == 1)
-			return (NULL);
 		if (philo_eating(philo) == 1)
+			return (NULL);
+		if (philo_thinking(philo) == 1)
 			return (NULL);
 		if (philo_sleeping(philo) == 1)
 			return (NULL);

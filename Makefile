@@ -1,5 +1,5 @@
 CC = cc
-FLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror -pthread
 SRC = main.c helpers.c initialize.c ft_free.c philo_routine.c simulation.c libft_utils.c
 OBJ = ${SRC:.c=.o}
 NAME = philo

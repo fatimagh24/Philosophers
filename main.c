@@ -6,7 +6,7 @@
 /*   By: fghanem <fghanem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 16:32:33 by fghanem           #+#    #+#             */
-/*   Updated: 2025/06/21 13:20:55 by fghanem          ###   ########.fr       */
+/*   Updated: 2025/06/23 11:12:27 by fghanem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	main(int arc, char **argv)
 {
 	t_philo		philo[MAX_NUM];
 	t_data		data;
-	pthread_t	monitor;
 
 	if (arc < 5 || arc > 6)
 	{
